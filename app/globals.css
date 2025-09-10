@@ -1,4 +1,4 @@
-/* A modern, dark, and minimalistic theme */
+/* A futuristic, minimalist, and dark theme with neon accents */
 @import "tailwindcss" source("..");
 
 /* include utility classes in streamdown */
@@ -11,19 +11,58 @@
 @plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
 
-/* define design tokens (single dark mode theme) */
+/* Keyframes for glowing and pulsating effects */
+@keyframes neon-glow-blue {
+  0%, 100% {
+    text-shadow: 0 0 5px hsl(220 70% 60%), 0 0 10px hsl(220 70% 60%);
+    box-shadow: 0 0 5px hsl(220 70% 60%), 0 0 10px hsl(220 70% 60%) inset;
+  }
+  50% {
+    text-shadow: 0 0 10px hsl(220 70% 70%), 0 0 20px hsl(220 70% 70%);
+    box-shadow: 0 0 10px hsl(220 70% 70%), 0 0 20px hsl(220 70% 70%) inset;
+  }
+}
+
+@keyframes neon-glow-purple {
+  0%, 100% {
+    text-shadow: 0 0 5px hsl(280 60% 60%), 0 0 10px hsl(280 60% 60%);
+    box-shadow: 0 0 5px hsl(280 60% 60%), 0 0 10px hsl(280 60% 60%) inset;
+  }
+  50% {
+    text-shadow: 0 0 10px hsl(280 60% 70%), 0 0 20px hsl(280 60% 70%);
+    box-shadow: 0 0 10px hsl(280 60% 70%), 0 0 20px hsl(280 60% 70%) inset;
+  }
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: hsl(220 15% 25%);
+  }
+  50% {
+    border-color: hsl(220 70% 60%);
+  }
+}
+
+/* Global animated background */
+@keyframes background-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Base theme (single dark mode theme) */
 :root {
-  --background: hsl(220 15% 8%);
+  --background: hsl(240 10% 3.9%);
   --foreground: hsl(210 20% 95%);
 
-  --card: hsl(220 15% 12%);
+  --card: hsl(220 15% 8%);
   --card-foreground: hsl(210 20% 95%);
 
-  --popover: hsl(220 15% 12%);
+  --popover: hsl(220 15% 8%);
   --popover-foreground: hsl(210 20% 95%);
 
   --primary: hsl(190 80% 60%);
-  --primary-foreground: hsl(220 15% 8%);
+  --primary-foreground: hsl(240 10% 3.9%);
 
   --secondary: hsl(220 15% 15%);
   --secondary-foreground: hsl(210 20% 95%);
@@ -35,7 +74,7 @@
   --accent-foreground: hsl(210 20% 95%);
 
   --destructive: hsl(0 80% 60%);
-  --destructive-foreground: hsl(220 15% 8%);
+  --destructive-foreground: hsl(240 10% 3.9%);
 
   --border: hsl(220 15% 25%);
   --input: hsl(220 15% 25%);
@@ -62,47 +101,12 @@
   --radius: 0.5rem;
 }
 
-/* Base theme application (dark mode only) */
+/* Ensure global styles are applied */
 .dark {
-  --background: hsl(220 15% 8%);
+  --background: hsl(240 10% 3.9%);
   --foreground: hsl(210 20% 95%);
-
-  --card: hsl(220 15% 12%);
-  --card-foreground: hsl(210 20% 95%);
-
-  --popover: hsl(220 15% 12%);
-  --popover-foreground: hsl(210 20% 95%);
-
-  --primary: hsl(190 80% 60%);
-  --primary-foreground: hsl(220 15% 8%);
-
-  --secondary: hsl(220 15% 15%);
-  --secondary-foreground: hsl(210 20% 95%);
-
-  --muted: hsl(220 10% 20%);
-  --muted-foreground: hsl(220 10% 40%);
-
-  --accent: hsl(220 10% 20%);
-  --accent-foreground: hsl(210 20% 95%);
-
-  --destructive: hsl(0 80% 60%);
-  --destructive-foreground: hsl(220 15% 8%);
-
-  --border: hsl(220 15% 25%);
-  --input: hsl(220 15% 25%);
-  --ring: hsl(190 80% 60%);
-
-  --sidebar-background: hsl(220 15% 10%);
-  --sidebar-foreground: hsl(210 20% 95%);
-  --sidebar-primary: hsl(190 80% 60%);
-  --sidebar-primary-foreground: hsl(220 15% 8%);
-  --sidebar-accent: hsl(220 15% 20%);
-  --sidebar-accent-foreground: hsl(210 20% 95%);
-  --sidebar-border: hsl(220 15% 25%);
-  --sidebar-ring: hsl(190 80% 60%);
 }
 
-/* Define theme for tailwind plugins */
 @theme {
   --font-sans: var(--font-geist);
   --font-mono: var(--font-geist-mono);
@@ -157,11 +161,6 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-*/
 @layer base {
   *,
   ::after,
@@ -170,62 +169,87 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
   }
-}
-
-@utility text-balance {
-  text-wrap: balance;
-}
-
-@utility -webkit-overflow-scrolling-touch {
-  -webkit-overflow-scrolling: touch;
-}
-
-@utility touch-pan-y {
-  touch-action: pan-y;
-}
-
-@utility overscroll-behavior-contain {
-  overscroll-behavior: contain;
-}
-
-@layer utilities {
-  :root {
-    --foreground-rgb: 240, 246, 252;
-    --background-start-rgb: 19, 21, 25;
-    --background-end-rgb: 19, 21, 25;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
 
   body {
     @apply bg-background text-foreground;
     overflow-x: hidden;
     position: relative;
+    background: linear-gradient(-45deg, hsl(240 10% 3.9%), hsl(220 15% 10%), hsl(240 10% 3.9%));
+    background-size: 400% 400%;
+    animation: background-gradient 15s ease infinite;
   }
 
   html {
     overflow-x: hidden;
   }
+
+  /* Neon-like text effect for primary elements */
+  .neon-text {
+    animation: neon-glow-blue 1.5s ease-in-out infinite alternate;
+  }
+  .neon-purple {
+    animation: neon-glow-purple 1.5s ease-in-out infinite alternate;
+  }
 }
 
+/* Apply neon glow to specific components */
+.group-hover\/menu-item:hover,
+.peer-data-\[active=true\]\/menu-button,
+.group-data-\[state=open\]\/item:hover,
+.group-focus-within\/menu-item {
+  @apply text-primary-foreground;
+}
+
+.peer-data-\[active=true\]\/menu-button {
+  border-color: var(--color-primary);
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+.neon-border {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 5px var(--color-primary);
+}
+
+/* Custom scrollbar styling for a digital look */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--background);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted-foreground) var(--background);
+}
+
+/* Existing styles for editor and other elements */
 .skeleton {
   * {
     pointer-events: none !important;
   }
-
   *[class^="text-"] {
     color: transparent;
     @apply rounded-md bg-foreground/20 select-none animate-pulse;
   }
-
   .skeleton-bg {
     @apply bg-foreground/10;
   }
-
   .skeleton-div {
     @apply bg-foreground/20 animate-pulse;
   }
@@ -265,34 +289,4 @@
 
 .suggestion-highlight {
   @apply bg-blue-200 hover:bg-blue-300 dark:hover:bg-blue-400/50 dark:text-blue-50 dark:bg-blue-500/40;
-}
-
-/* minimal scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
-  transition: background 0.2s ease;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.5);
-}
-
-::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-/* firefox scrollbar styling */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
 }
