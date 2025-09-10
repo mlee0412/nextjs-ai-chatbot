@@ -2,14 +2,15 @@ import { Toaster } from 'sonner';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
+import { PWAProvider } from '@/components/pwa-provider';
 
 import './globals.css';
 import { SessionProvider } from 'next-auth/react';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://chat.vercel.ai'),
-  title: 'Next.js Chatbot Template',
-  description: 'Next.js chatbot template using the AI SDK.',
+  title: 'Personal AI Agent',
+  description: 'Installable personal AI assistant with a futuristic UI.',
 };
 
 export const viewport = {
@@ -78,6 +79,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <Toaster position="top-center" />
+          <PWAProvider />
           <SessionProvider>{children}</SessionProvider>
         </ThemeProvider>
       </body>
