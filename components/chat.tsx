@@ -15,7 +15,6 @@ import { useArtifactSelector } from '@/hooks/use-artifact';
 import { unstable_serialize } from 'swr/infinite';
 import { getChatHistoryPaginationKey } from './sidebar-history';
 import { toast } from './toast';
-import type { Session } from 'next-auth';
 import { useSearchParams } from 'next/navigation';
 import { useChatVisibility } from '@/hooks/use-chat-visibility';
 import { useAutoResume } from '@/hooks/use-auto-resume';
@@ -29,7 +28,6 @@ export function Chat({
   initialChatModel,
   initialVisibilityType,
   isReadonly,
-  session,
   autoResume,
   initialLastContext,
 }: {
@@ -38,7 +36,6 @@ export function Chat({
   initialChatModel: string;
   initialVisibilityType: VisibilityType;
   isReadonly: boolean;
-  session: Session;
   autoResume: boolean;
   initialLastContext?: LanguageModelUsage;
 }) {
@@ -137,12 +134,7 @@ export function Chat({
   return (
     <>
       <div className="overscroll-behavior-contain flex h-dvh min-w-0 touch-pan-y flex-col bg-background">
-        <ChatHeader
-          chatId={id}
-          selectedVisibilityType={initialVisibilityType}
-          isReadonly={isReadonly}
-          session={session}
-        />
+        <ChatHeader />
 
         <Messages
           chatId={id}
@@ -169,7 +161,6 @@ export function Chat({
               messages={messages}
               setMessages={setMessages}
               sendMessage={sendMessage}
-              selectedVisibilityType={visibilityType}
               selectedModelId={initialChatModel}
               usage={usage}
             />
@@ -177,23 +168,22 @@ export function Chat({
         </div>
       </div>
 
-      <Artifact
-        chatId={id}
-        input={input}
-        setInput={setInput}
-        status={status}
-        stop={stop}
-        attachments={attachments}
-        setAttachments={setAttachments}
-        sendMessage={sendMessage}
-        messages={messages}
-        setMessages={setMessages}
-        regenerate={regenerate}
-        votes={votes}
-        isReadonly={isReadonly}
-        selectedVisibilityType={visibilityType}
-        selectedModelId={initialChatModel}
-      />
+        <Artifact
+          chatId={id}
+          input={input}
+          setInput={setInput}
+          status={status}
+          stop={stop}
+          attachments={attachments}
+          setAttachments={setAttachments}
+          sendMessage={sendMessage}
+          messages={messages}
+          setMessages={setMessages}
+          regenerate={regenerate}
+          votes={votes}
+          isReadonly={isReadonly}
+          selectedModelId={initialChatModel}
+        />
     </>
   );
 }
