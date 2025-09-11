@@ -1,12 +1,11 @@
 'use client';
 
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useWindowSize } from 'usehooks-ts';
 
 import { SidebarToggle } from '@/components/sidebar-toggle';
 import { Button } from '@/components/ui/button';
-import { PlusIcon, VercelIcon } from './icons';
+import { PlusIcon } from './icons';
 import { useSidebar } from './ui/sidebar';
 import { memo } from 'react';
 
@@ -17,35 +16,24 @@ function PureChatHeader() {
   const { width: windowWidth } = useWindowSize();
 
   return (
-    <header className='sticky top-0 flex items-center gap-2 border-primary/50 border-b bg-background/60 px-2 py-1.5 backdrop-blur-lg md:px-2'>
+    <header className="relative sticky top-0 z-50 flex items-center justify-between bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 px-3 py-2 text-white shadow-lg backdrop-blur-sm">
       <SidebarToggle />
-
+      <h1 className='-translate-x-1/2 pointer-events-none absolute left-1/2 font-bold text-sm tracking-tight md:text-base'>
+        Personal AI Agent
+      </h1>
       {(!open || windowWidth < 768) && (
         <Button
-          variant="outline"
-          className="order-2 ml-auto h-8 px-2 md:order-1 md:ml-0 md:h-fit md:px-2"
+          variant="ghost"
+          className="ml-auto h-8 w-8 rounded-full bg-white/20 p-0 text-white hover:bg-white/30 md:h-9"
           onClick={() => {
             router.push('/');
             router.refresh();
           }}
         >
-          <PlusIcon />
-          <span className="md:sr-only">New Chat</span>
+          <PlusIcon className="h-4 w-4" />
+          <span className="sr-only">New Chat</span>
         </Button>
       )}
-
-      <Button
-        className="order-3 hidden bg-zinc-900 px-2 text-zinc-50 hover:bg-zinc-800 md:ml-auto md:flex md:h-fit dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
-        asChild
-      >
-        <Link
-          href={`https://vercel.com/new/clone?repository-url=https://github.com/vercel/ai-chatbot&env=AUTH_SECRET&envDescription=Learn more about how to get the API Keys for the application&envLink=https://github.com/vercel/ai-chatbot/blob/main/.env.example&demo-title=AI Chatbot&demo-description=An Open-Source AI Chatbot Template Built With Next.js and the AI SDK by Vercel.&demo-url=https://chat.vercel.ai&products=[{"type":"integration","protocol":"storage","productSlug":"neon","integrationSlug":"neon"},{"type":"integration","protocol":"storage","productSlug":"upstash-kv","integrationSlug":"upstash"},{"type":"blob"}]`}
-          target="_noblank"
-        >
-          <VercelIcon size={16} />
-          Deploy with Vercel
-        </Link>
-      </Button>
     </header>
   );
 }
