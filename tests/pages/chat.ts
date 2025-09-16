@@ -62,12 +62,6 @@ export class ChatPage {
     );
   }
 
-  async sendUserMessageFromSuggestion() {
-    await this.page
-      .getByRole('button', { name: 'What are the advantages of' })
-      .click();
-  }
-
   async isElementVisible(elementId: string) {
     await expect(this.page.getByTestId(elementId)).toBeVisible();
   }
@@ -113,23 +107,6 @@ export class ChatPage {
     await this.page.getByTestId('model-selector').click();
     await this.page.getByTestId(`model-selector-item-${chatModelId}`).click();
     expect(await this.getSelectedModel()).toBe(chatModel.name);
-  }
-
-  public async getSelectedVisibility() {
-    const visibilityId = await this.page
-      .getByTestId('visibility-selector')
-      .innerText();
-    return visibilityId;
-  }
-
-  public async chooseVisibilityFromSelector(
-    chatVisibility: 'public' | 'private',
-  ) {
-    await this.page.getByTestId('visibility-selector').click();
-    await this.page
-      .getByTestId(`visibility-selector-item-${chatVisibility}`)
-      .click();
-    expect(await this.getSelectedVisibility()).toBe(chatVisibility);
   }
 
   async getRecentAssistantMessage() {
