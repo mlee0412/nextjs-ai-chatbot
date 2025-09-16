@@ -68,3 +68,12 @@ pnpm dev
 ```
 
 Your app template should now be running on [localhost:3000](http://localhost:3000).
+
+## Home Assistant integration
+
+Set the `HOME_ASSISTANT_URL` and `HOME_ASSISTANT_TOKEN` environment variables to allow the chatbot to proxy commands to your Home Assistant instance. The server exposes a new `/api/home-assistant` route that requires authentication and supports:
+
+- `POST /api/home-assistant` — call a Home Assistant service by providing the `domain`, `service`, optional `entityId`/`target`, and `data` payload.
+- `GET /api/home-assistant?entity_id=<entity>` — retrieve the latest state for an entity from Home Assistant.
+
+The AI assistant can also invoke these capabilities automatically through the `homeAssistant` tool once the environment variables are configured.
